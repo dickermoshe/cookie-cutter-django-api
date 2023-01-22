@@ -120,7 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+# .env Allow .env files to be committed to the repository
 .venv
 env/
 venv/
