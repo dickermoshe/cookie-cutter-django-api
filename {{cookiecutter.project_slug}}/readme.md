@@ -18,9 +18,11 @@ Get Started
     pip install -r requirements.txt
     ```
 4. Edit the `.env` file
-5. Run the migrations:
+5. Run the migrations and collect static files:
     ```
-    python manage.py makemigrations
+    python manage.py makemigrations accounts
+    python manage.py migrate
+    python manage.py collectstatic
     ```
 6. Run the server:
     ```
