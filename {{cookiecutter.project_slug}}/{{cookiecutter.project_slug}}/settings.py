@@ -163,7 +163,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOWED_ORIGINS += os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if os.getenv('CORS_ALLOWED_ORIGINS') else []
 
-AUTH_USER_MODEL = "accounts.CustomUser" 
+# AUTH_USER_MODEL = "accounts.CustomUser" 
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserSerializer',
@@ -174,4 +174,5 @@ REST_FRAMEWORK = {
             'rest_framework.authentication.TokenAuthentication',
         ],
 }
+
 
