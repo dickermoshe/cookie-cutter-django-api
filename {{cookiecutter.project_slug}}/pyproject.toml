@@ -6,6 +6,7 @@ authors = ["Moshe Dicker <dickermoshe@gmail.com>"]
 readme = "README.md"
 packages = [{ include = "{{cookiecutter.project_slug}}" }]
 
+
 [tool.poetry.dependencies]
 python = "^3.11"
 dj-database-url = "^2.0.0"
@@ -27,6 +28,7 @@ django-stubs = { extras = ["compatible-mypy"], version = "^4.2.0" }
 djangorestframework-stubs = { extras = [
     "compatible-mypy",
 ], version = "^3.14.0" }
+ptpython = "^3.0.23"
 
 [build-system]
 requires = ["poetry-core"]
@@ -34,6 +36,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main", 'mypy_drf_plugin.main']
-
-[tool.django-stubs]
-django_settings_module = "slackyt.settings"
