@@ -4,24 +4,33 @@ version = "0.1.0"
 description = ""
 authors = ["Moshe Dicker <dickermoshe@gmail.com>"]
 readme = "README.md"
-packages = [{include = "{{cookiecutter.project_slug}}"}]
+packages = [{ include = "{{cookiecutter.project_slug}}" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 dj-database-url = "^2.0.0"
 Django = "^4.2.3"
+django-extensions = "^3.2.1"
 django-cors-headers = "^4.1.0"
 djangorestframework = "^3.14.0"
 drf-spectacular = "^0.26.3"
 gunicorn = "^20.1.0"
 psycopg2 = "^2.9.6"
 python-dotenv = "^1.0.0"
-whitenoise = "^6.5.0"
+django-storages = "^1.13.2"
 
 [tool.poetry.group.dev.dependencies]
-django-stubs = "^4.2.3"
-djangorestframework-stubs = "^3.14.2"
+django-stubs = { extras = ["compatible-mypy"], version = "^4.2.0" }
+djangorestframework-stubs = { extras = [
+    "compatible-mypy",
+], version = "^3.14.0" }
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main", 'mypy_drf_plugin.main']
+
+[tool.django-stubs]
+django_settings_module = "{{cookiecutter.project_slug}}.settings"
