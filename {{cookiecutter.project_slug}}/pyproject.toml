@@ -18,10 +18,12 @@ django-cors-headers = "^4.0.0"
 dj-database-url = "^2.0.0"
 gunicorn = "^20.1.0"
 hiredis = "^2.2.3"
+gevent = "^23.9.1"
 redis = "^4.5.5"
 boto3 = "^1.26.140"
-django-storages = "^1.13.2"
+django-storages = { extras = ["s3"], version = "^1.14.2" }
 sentry-sdk = { extras = ["django"], version = "^1.39.1" }
+
 
 [tool.poetry.group.dev.dependencies]
 django-stubs = { extras = ["compatible-mypy"], version = "^4.2.0" }

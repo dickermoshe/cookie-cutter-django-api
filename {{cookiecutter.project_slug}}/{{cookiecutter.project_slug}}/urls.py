@@ -12,8 +12,8 @@ urlpatterns = [
         SpectacularAPIView.as_view(
             versioning_class=URLPathVersioning,
             api_version="v1",
-        ),
+        ),  # type: ignore
         name="schema",
-    ),
-    path("docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    ),  # type: ignore
+    path("docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),  # type: ignore
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
