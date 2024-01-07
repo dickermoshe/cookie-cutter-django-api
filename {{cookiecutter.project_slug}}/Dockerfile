@@ -8,6 +8,9 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y libpq-dev gcc
 
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/index/bash_history/.bash_history" \
+    && echo "$SNIPPET" >> "/root/.bashrc"
+
 # Copy the poetry files to the container
 COPY pyproject.toml poetry.lock ./
 
@@ -23,5 +26,12 @@ COPY . .
 # Expose port 80 for Gunicorn
 EXPOSE 80
 
+
+# Run collectstatic
+# RUN poetry run python manage.py collectstatic --noinput
+
+# Run migrations
+# RUN poetry run python manage.py migrate
+
 # Start Gunicorn
-CMD ["poetry", "run", "gunicorn", "--bind", "0.0.0.0:80", "refuah_backend.wsgi"]
+CMD ["poetry", "run", "gunicorn", "--bind", "0.0.0.0:80", "{{cookiecutter.project_slug}}.wsgi"]
