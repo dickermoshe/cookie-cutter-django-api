@@ -21,7 +21,7 @@ hiredis = "^2.2.3"
 redis = "^4.5.5"
 boto3 = "^1.26.140"
 django-storages = "^1.13.2"
-sentry-sdk = {extras = ["django"], version = "^1.39.1"}
+sentry-sdk = { extras = ["django"], version = "^1.39.1" }
 
 [tool.poetry.group.dev.dependencies]
 django-stubs = { extras = ["compatible-mypy"], version = "^4.2.0" }
