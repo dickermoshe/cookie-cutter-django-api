@@ -5,8 +5,8 @@ description = ""
 authors = ["Moshe Dicker <dickermoshe@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-Django = "^4.2.1"
+python = "^3.12"
+Django = "^5.0.4"
 django-extensions = "^3.2.1"
 django-phonenumber-field = { extras = ["phonenumberslite"], version = "^7.1.0" }
 django-address = "^0.2.8"
@@ -23,13 +23,16 @@ redis = "^4.5.5"
 boto3 = "^1.26.140"
 django-storages = { extras = ["s3"], version = "^1.14.2" }
 sentry-sdk = { extras = ["django"], version = "^1.39.1" }
+django-stubs-ext = "^5.0.0"
+django-filter = "^24.2"
+whitenoise = "^6.6.0"
 
 
 [tool.poetry.group.dev.dependencies]
-django-stubs = { extras = ["compatible-mypy"], version = "^4.2.0" }
+django-stubs = { extras = ["compatible-mypy"], version = "^5.0.0" }
 djangorestframework-stubs = { extras = [
     "compatible-mypy",
-], version = "^3.14.0" }
+], version = "^3.15.0" }
 ptpython = "^3.0.25"
 pip-system-certs = "^4.0"
 
@@ -43,3 +46,7 @@ plugins = ["mypy_django_plugin.main", 'mypy_drf_plugin.main']
 
 [tool.django-stubs]
 django_settings_module = "{{cookiecutter.project_slug}}.settings"
+
+
+[tool.ruff]
+line-length = 120

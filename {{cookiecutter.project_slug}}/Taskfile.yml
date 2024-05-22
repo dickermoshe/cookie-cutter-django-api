@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  watch:
+    desc: "Watch for changes & Rebuild"
+    cmds:
+      - docker compose watch

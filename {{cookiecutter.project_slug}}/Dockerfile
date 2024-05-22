@@ -8,17 +8,16 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y libpq-dev gcc
 
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/index/bash_history/.bash_history" \
-    && echo "$SNIPPET" >> "/root/.bashrc"
+# Install Poetry
+RUN pip install poetry
+RUN pip install poetry-plugin-export
 
 # Copy the poetry files to the container
 COPY pyproject.toml poetry.lock ./
 
-# Install poetry
-RUN pip install poetry
-
 # Install dependencies
-RUN poetry install  --no-root --only main
+RUN poetry export -f requirements.txt -o requirements.txt --without-hashes
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application code to the container
 COPY . .
@@ -34,4 +33,4 @@ EXPOSE 80
 # RUN poetry run python manage.py migrate
 
 # Start Gunicorn
-CMD ["poetry", "run", "gunicorn", "--bind", "0.0.0.0:80", "{{cookiecutter.project_slug}}.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80","--timeout","600", "{{cookiecutter.project_slug}}.wsgi"]

@@ -14,6 +14,10 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 import sentry_sdk
+import django_stubs_ext
+
+# Mypy monkeypatch
+django_stubs_ext.monkeypatch()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
@@ -56,11 +61,13 @@ INSTALLED_APPS = [
     "address",
     "phonenumber_field",
     "accounts",
+     "api",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+        "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -74,7 +81,7 @@ ROOT_URLCONF = "{{cookiecutter.project_slug}}.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -108,6 +115,12 @@ if os.environ.get("REDIS_URL"):
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": os.environ.get("REDIS_URL"),
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         }
     }
 
@@ -155,6 +168,18 @@ LOGGING = {
         "handlers": ["console"],
         "level": "INFO",
     },
+    "loggers": {
+        # Log Django server events
+        "django.server": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        # Log database queries
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+    },
 }
 
 # Custom User Model & Default Auto Field
@@ -182,6 +207,8 @@ CSRF_TRUSTED_ORIGINS = (
 # Django Rest Framework
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.URLPathVersioning",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
@@ -230,3 +257,4 @@ if not DEBUG and PRODUCTION and os.environ.get("SENTRY_DSN"):
     )
 
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
+INTERNAL_IPS = ["127.0.0.1"]

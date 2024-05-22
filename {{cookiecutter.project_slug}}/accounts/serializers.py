@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-    class Meta:
+    class Meta:  # type: ignore
         model = CustomUser
         fields = [
             "id",
